@@ -19,5 +19,46 @@ import static org.junit.jupiter.api.Assertions.*;
 //@ContextConfiguration(initializers = {EmployeeServiceTest.Initializer.class})
 class EmployeeServiceTest {
 
+    @Autowired
+    EmployeeService employeeService;
+
+    /* 
+    @Container
+    private static PostgreSQLContainer<?> postgresDB = new PostgreSQLContainer<>("postgres:13.2")
+            .withDatabaseName("postgres")
+            .withUsername("postgres")
+            .withPassword("secret");
+
+
+    static class Initializer
+            implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+            TestPropertyValues.of(
+                    "spring.datasource.url=" + postgresDB.getJdbcUrl(),
+                    "spring.datasource.username=" + postgresDB.getUsername(),
+                    "spring.datasource.password=" + postgresDB.getPassword(),
+                    "spring.jpa.hibernate.ddl-auto=create-drop"
+            ).applyTo(configurableApplicationContext.getEnvironment());
+        }
+    }*/
+
+    @Test
+    void generatedPasswordShouldHaveProperLength() {
+        String password = employeeService.generatePassword(10);
+        assertEquals(10, password.length());
+    }
+
     
+    @Test
+    void generatedPasswordShouldContainProperChars() {
+        String password = employeeService.generatePassword(10);
+        boolean charsOk = true;
+        for(int i=0 ; i < password.length() ; i++) {
+          if(!charsOk){
+            break;
+          }
+          charsOk = EmployeeService.allowedCharString.indexOf(password.charAt(i))>=0;
+        }
+        assertTrue(charsOk);
+    }
 }

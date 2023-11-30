@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.ensai.demo.model.Employee;
-import fr.ensai.demo.repository.EmployeRepository;
+import fr.ensai.demo.repository.EmployeeRepository;
 
 @Service
 public class EmployeeService {
@@ -18,7 +18,7 @@ public class EmployeeService {
     public static final String allowedCharString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789*/$?;";
     
     @Autowired
-    private EmployeRepository employeRepository;
+    private EmployeeRepository employeRepository;
 
     public Optional<Employee> getEmployee(final Long id) {
         return employeRepository.findById(id);

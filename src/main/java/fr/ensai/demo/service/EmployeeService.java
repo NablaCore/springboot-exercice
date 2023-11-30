@@ -31,8 +31,10 @@ public class EmployeeService {
     return employeRepository.findAll();
   }
 
-  public void deleteEmployee(final Long id) {
+  public boolean deleteEmployee(final Long id) {
+    Optional<Employee> employee = getEmployee(id);
     employeRepository.deleteById(id);
+    return employee.isPresent();
   }
 
   public Iterable<Employee> searchEmployees(String term, boolean caseSensitive) {

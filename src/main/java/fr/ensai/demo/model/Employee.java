@@ -6,8 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "employees")
@@ -17,14 +17,19 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    @Column(name="first_name")
+    @NotEmpty(message = "First name manquant")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name="last_name")
+    @NotEmpty(message = "Last name manquant")
+    @Column(name = "last_name")
     private String lastName;
 
+    @NotEmpty(message = "Email manquant")
+    @Email
     private String mail;
 
+    @NotEmpty(message = "Password manquant")
     private String password;
 
     public Employee() {
@@ -38,7 +43,9 @@ public class Employee {
         this.password = password;
     }
 
-
+    public Employee(String firstName, String lastName, String mail, String password) {
+        this(null, firstName, lastName, mail, password);
+    }
 
     public Long getId() {
         return id;
@@ -80,4 +87,3 @@ public class Employee {
         this.password = password;
     }
 }
-
